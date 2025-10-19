@@ -94,11 +94,16 @@ class PostgresClient:
         """Transaction with commit/rollback."""
         with self._pool.connection() as conn:
             try:
+                autocommit = conn.autocommit
+                if autocommit:
+                    conn.autocommit = False
                 with conn.cursor() as cur:
                     yield cur
                 conn.commit()
+                conn.autocommit = autocommit
             except DatabaseError:
                 conn.rollback()
+                conn.autocommit = autocommit
                 raise
 
     # ----------------------------------------------------- helpers ----------------------------------------------------
@@ -113,6 +118,8 @@ class PostgresClient:
         """
         with self._pool.connection() as conn, conn.cursor() as cur:
             cur.execute(sql, params)
+            if not conn.autocommit:
+                conn.commit()
             return cur.rowcount or 0
 
     def executemany(self, sql: str, seq_of_params: Iterable[Sequence[Any] | Mapping[str, Any]]) -> int:
@@ -125,6 +132,8 @@ class PostgresClient:
         """
         with self._pool.connection() as conn, conn.cursor() as cur:
             cur.executemany(sql, seq_of_params)
+            if not conn.autocommit:
+                conn.commit()
             return cur.rowcount or 0
 
     def fetch_one(

@@ -89,10 +89,12 @@ def create_tables(host: str, port: int, user: str, password: str, dbname: str, l
                     name VARCHAR(50) NOT NULL CHECK (name IN ('new', 'in progress', 'completed')),
                     CONSTRAINT uq_status_name UNIQUE (name)
                 );
+                INSERT INTO status (name) VALUES ('new'), ('in progress'), ('completed') ON CONFLICT (name) DO NOTHING;
                 """,
                 logger
         ):
             logger.info("The table \"status\" created.")
+
 
         # Create  table: tasks
         if create_table(
