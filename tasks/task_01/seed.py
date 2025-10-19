@@ -131,3 +131,5 @@ def seed(
 
     if fill_users_data(pg_client, users, logger):
         fill_tasks_data(pg_client, tasks, logger)
+
+    pg_client.close()

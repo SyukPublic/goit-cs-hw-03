@@ -91,7 +91,9 @@ class PostgresClient:
 
     @contextmanager
     def transaction(self) -> Iterator[Optional[psycopg.Cursor[Any]]]:
-        """Transaction with commit/rollback."""
+        """
+        Transaction with commit/rollback.
+        """
         with self._pool.connection() as conn:
             try:
                 autocommit = conn.autocommit
