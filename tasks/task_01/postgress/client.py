@@ -138,7 +138,7 @@ class PostgresClient:
                 conn.commit()
             return cur.rowcount or 0
 
-    def fetch_one(
+    def fetchone(
             self,
             sql: str,
             params: Optional[Sequence[Any] | Mapping[str, Any]] = None,
@@ -155,7 +155,11 @@ class PostgresClient:
             row = cur.fetchone()
             return dict(row) if row is not None else None
 
-    def fetch_all(self, sql: str, params: Optional[Sequence[Any] | Mapping[str, Any]] = None) -> list[dict[str, Any]]:
+    def fetchall(
+            self,
+            sql: str,
+            params: Optional[Sequence[Any] | Mapping[str, Any]] = None,
+    ) -> list[dict[str, Any]]:
         """
         Fetch all rows (as a list of dictionary).
 

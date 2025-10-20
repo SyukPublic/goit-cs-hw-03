@@ -19,7 +19,7 @@ def create_database(host: str, port: int, user: str, password: str, dbname: str,
     )
 
     try:
-        exists = pg_client.fetch_one("select EXISTS( SELECT 1 FROM pg_database WHERE datname = %s);", (dbname,))
+        exists = pg_client.fetchone("select EXISTS( SELECT 1 FROM pg_database WHERE datname = %s);", (dbname,))
         if not  exists.get('exists', False):
             logger.warning(f"The database \"{dbname}\" does not exist. Creating it.")
             try:

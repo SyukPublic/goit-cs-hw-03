@@ -70,7 +70,7 @@ def get_users_ids(pg_client: PostgresClient) -> list[int]:
     :param pg_client: Database connection class
     :return: List of user IDs
     """
-    users = pg_client.fetch_all("SELECT id FROM users")
+    users = pg_client.fetchall("SELECT id FROM users")
     return [user.get('id') for user in users if user.get('id') is not None]
 
 
@@ -81,7 +81,7 @@ def get_status_ids(pg_client: PostgresClient) -> list[int]:
     :param pg_client: Database connection class
     :return: List of status IDs
     """
-    users = pg_client.fetch_all("SELECT id FROM status")
+    users = pg_client.fetchall("SELECT id FROM status")
     return [user.get('id') for user in users if user.get('id') is not None]
 
 

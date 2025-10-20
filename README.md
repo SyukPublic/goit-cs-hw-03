@@ -11,5 +11,5 @@
 Файл **tasks/task_01/queries.sql** - SQL-скрипт, із заданими запитами.        
   
 ### Завдання 2  
-Папка **./tasks/task_02** -   
+Файл **run_mongodb_crud.py** - тест для завдання 2 (``-h for help``).  
 
